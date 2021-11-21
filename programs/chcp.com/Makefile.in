@@ -1,0 +1,6 @@
+MODULE    = chcp.com
+
+EXTRADLLFLAGS = -mconsole -municode
+
+C_SRCS = \
+	main.c

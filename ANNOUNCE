@@ -1,0 +1,544 @@
+The Wine development release 6.21 is now available.
+
+What's new in this release (see below for details):
+  - WinSpool, GPhoto, and a few other modules converted to PE.
+  - Better support for inline functions in DbgHelp.
+  - Beginnings of a MSDASQL implementation.
+  - Various bug fixes.
+
+The source is available from the following locations:
+
+  https://dl.winehq.org/wine/source/6.x/wine-6.21.tar.xz
+  http://mirrors.ibiblio.org/wine/source/6.x/wine-6.21.tar.xz
+
+Binary packages for various distributions will be available from:
+
+  https://www.winehq.org/download
+
+You will find documentation on https://www.winehq.org/documentation
+
+You can also get the current source directly from the git
+repository. Check https://www.winehq.org/git for details.
+
+Wine is available thanks to the work of many people. See the file
+AUTHORS in the distribution for the complete list.
+
+----------------------------------------------------------------
+
+Bugs fixed in 6.21 (total 26):
+
+  38420  Sticky mouse with xinput2
+  43546  Multiple programs crash with unimplemented function vcomp{100,110,140}.dll._vcomp_for_static_simple_init_i8 (Astrotoaster, Gaea-1.0.16.8020, easyHDR 3.13.0, SimIon, BlueSkyPlan)
+  44055  Multiple applications fail to run in Win7+ mode, requiring DWM composition API support to be enabled (Aero Glass, transparent windows)(Affinity Designer 1.x, Electron-based apps using isAeroGlassEnabled API)
+  46000  SuperTux 0.6.0 nightly build crashes inside ucrtbase _FindAndUnlinkFrame
+  46472  Linux kernel 4.19 breaks startup of Call of Duty: Black Ops II due to change in PTRACE_POKEUSER hw breakpoint behavior
+  46801  Hitman: Sniper Challenge crashes on startup when using FAudio
+  48377  Home Designer Suite 21.3.1.1x64 hangs on mouse button release when drawing wall
+  48791  Multiple games have sound stuttering when using FAudio (Sniper Elite series, Resident Evil 0 HD Remaster, Homesick, Call of Juarez: Gunslinger)
+  48981  Riot Vanguard (Riot Games) needs Microsoft Kernel Mode Cryptographic Primitives Library 'cng.sys'
+  50088  Memento Mori needs WMReaderAdvanced2_OpenStream
+  51267  Rise of Legends Demo crashes with null pointer exception inside SAXReader::parseURL
+  51628  Samsung SDK 1.2.2 for Java ME: Black window
+  51677  Resident Evil 4 HD crashes when gameplay starts
+  51684  quartz:systemclock gets out of order timestamps on Windows
+  51719  _pclose() does not cause child stdin to report EOF
+  51815  DocumentProperties broken by last update (x64 only)
+  51851  Resident Evil 6 stops to a black screen instead of playing videos (needs WMSyncReader_GetOutputCount)
+  51856  access violation at emfdc_delete_object+0x17
+  51911  vbscript does not handle strings in if clauses
+  51914  Color picker doesn't render with custom themes
+  51917  Internet Explorer 8 crashes when visiting http://www.baidu.com/ on unimplemented function dxtrans.dll.DllGetClassObject
+  51919  New sal.h macros break libstdc++ includes in wineg++
+  51921  Multiple games crash due to assertion failures in bundled FAudio (Unreal Engine 4 games, Skyrim SE)
+  51926  Wine fails to build with glibc headers < 2.24
+  51937  Resident Evil 6 stops to a black screen instead of playing videos (needs WMSyncReader_GetOutputProps)
+  51951  configure says that libsane development files are not found even though they are present
+
+----------------------------------------------------------------
+
+Changes since 6.20:
+
+Alex Henrie (1):
+      dxtrans: Add DllGetClassObject stub.
+
+Alexandre Julliard (76):
+      attrib: Use the standard va_list instead of __ms_va_list.
+      cmd: Use the standard va_list instead of __ms_va_list.
+      expand: Use the standard va_list instead of __ms_va_list.
+      fsutil: Use the standard va_list instead of __ms_va_list.
+      hostname: Use the standard va_list instead of __ms_va_list.
+      icinfo: Use the standard va_list instead of __ms_va_list.
+      ipconfig: Use the standard va_list instead of __ms_va_list.
+      net: Use the standard va_list instead of __ms_va_list.
+      netstat: Use the standard va_list instead of __ms_va_list.
+      reg: Use the standard va_list instead of __ms_va_list.
+      regedit: Use the standard va_list instead of __ms_va_list.
+      regsvr32: Use the standard va_list instead of __ms_va_list.
+      services/tests: Use the standard va_list instead of __ms_va_list.
+      taskkill: Use the standard va_list instead of __ms_va_list.
+      uninstaller: Use the standard va_list instead of __ms_va_list.
+      winedbg: Use the standard va_list instead of __ms_va_list.
+      winemenubuilder: Use the standard va_list instead of __ms_va_list.
+      winetest: Use the standard va_list instead of __ms_va_list.
+      wmic: Use the standard va_list instead of __ms_va_list.
+      xcopy: Use the standard va_list instead of __ms_va_list.
+      makefiles: Don't try to link a library to itself.
+      makefiles: Add support for importing PE system libraries using the -l option.
+      ntdll: Move math functions to a separate file.
+      ntdll: Copy atan() implementation from msvcrt.
+      ntdll: Copy ceil() implementation from msvcrt.
+      ntdll: Copy floor() implementation from msvcrt.
+      ntdll: Copy fabs() implementation from msvcrt.
+      ntdll: Copy sin() and cos() implementation from msvcrt.
+      ntdll: Copy tan() implementation from msvcrt.
+      ntdll: Copy log() implementation from msvcrt.
+      ntdll: Copy pow() implementation from msvcrt.
+      ntdll: Copy sqrt() implementation from msvcrt.
+      ntdll: Remove math functions from the unixlib interface.
+      windowscodecs: Remove the no longer used icns encoder.
+      windowscodecs: Remove the Unix library.
+      configure: Disable sane.ds if the Unix library is missing.
+      sane.ds: Don't pass the device handle to the option helpers.
+      sane.ds: Use Twain types and status codes in option helpers.
+      sane.ds: Add helper function to set/get the scan area.
+      sane.ds: Convert the SANE parameters to a private structure.
+      sane.ds: Convert the SANE option descriptor to a private structure.
+      sane.ds: Move SANE library calls to a separate Unix library.
+      sane.ds: Build with msvcrt.
+      sane.ds: Use CRT memory allocation functions.
+      configure: Disable gphoto2.ds if the needed Unix libraries are missing.
+      gphoto2.ds: Move libgphoto2 handling to a separate Unix library.
+      gphoto2.ds: Use the bundled libjpeg and build with msvcrt.
+      twain_32: Fix loading of TWAIN source modules.
+      capi2032: Link directly to libcapi20.
+      capi2032: Move libcapi20.so interface to a separate Unix library.
+      ctapi32: Move libctapi.so interface to a separate Unix library.
+      include: Don't include sys/stat.h in wine/port.h.
+      include: Don't include fcntl.h in wine/port.h.
+      configure: Fix the libsane notice check.
+      crypt32: Split the import_cert_store function to move memory allocations to the PE side.
+      crypt32: Convert the Unix library to the __wine_unix_call interface.
+      faudio: Import upstream release 21.11.
+      dnsapi: Fix the DNS_KEY_DATA and DNS_SIG_DATA structure definitions.
+      dnsapi: Make type_to_str() into a proper debugstr function.
+      dnsapi: Implement DnsExtractRecordsFromMessage().
+      dnsapi: Build the DNS reply records on the PE side.
+      dnsapi: Convert the Unix library to the __wine_unix_call interface.
+      dnsapi: Use CRT memory allocation functions.
+      qcap: Convert the Unix library to the __wine_unix_call interface.
+      include: Don't define __in and __out.
+      include: Don't include unistd.h in wine/port.h.
+      include: Don't include string.h in wine/port.h.
+      include: Don't include stdlib.h in wine/port.h.
+      include: Don't include wine/port.h in Unix libraries.
+      wldap32: Move the SASL callback to the Unix side.
+      wldap32: Don't use varargs functions in the Unix library interface.
+      wldap32: Avoid returning pointers from the Unix interface functions.
+      wldap32: Convert the Unix library to the __wine_unix_call interface.
+      kerberos: Move the ticket cache memory allocation to the PE side.
+      kerberos: Move timestamp conversion to the PE side.
+      kerberos: Convert the Unix library to the __wine_unix_call interface.
+
+Alistair Leslie-Hughes (41):
+      cng.sys: New dll.
+      msdasql: New DLL.
+      msdasql: Register MSDASQL interfaces.
+      msdasql: Implement MSDASQL provider.
+      msdasql: Support IDBProperties interface.
+      msdasql: Add IDBInitialize support.
+      msdasql/tests: Initial tests.
+      msdasql/tests: Remove DSN on cleanup.
+      msdasql: Implement IDBProperties GetPropertyInfo.
+      msdasql: Add IDBCreateSession support.
+      msdasql: Implement IDBCreateSession CreateSession.
+      msdasql: Add IPersist interface support.
+      include: Add some MFT CLSIDs.
+      include: Add CMSH264DecoderMFT CLSID.
+      msdasql: Add IGetDataSource support to session.
+      msdasql: Add IOpenRowset support to session.
+      msdasql: Add ISessionProperties to session.
+      msdasql: Add IDBCreateCommand to session.
+      msdasql: Implement IDBCreateCommand CreateCommand.
+      msdasql: Add ICommandProperties interface to ICommandText.
+      msdasql: Trace unsupported interfaces.
+      msdasql: Add IColumnsInfo interface for ICommandText.
+      msdasql: Add IConvertType interface for ICommandText.
+      include: Define WMADecMediaObject.
+      include: Add more DB_* defines.
+      msdasql: Add ICommandPrepare interface for ICommandText.
+      msdasql: Implement ICommandText Get/Set CommandText.
+      msdasql: Implement ICommandText GetDBSession.
+      msdasql: Return valid object from ICommandText Execute.
+      msdasql: Correct ICommandText Execute test.
+      msdasql: Support IRowsetInfo in IRowset interface.
+      msdasql: Support IColumnsInfo in Rowset.
+      msdasql: Add IAccessor to rowset.
+      msdasql: Add IColumnsRowset support to rowset.
+      msdasql: Trace unsupported rowset interfaces.
+      msdasql: Support CLSID_MSDASQL_ENUMERATOR interface.
+      msdasql: Implement ISourcesRowset GetSourcesRowset for enumeration.
+      msdasql: Support IAccessor in IRowset for Enumeration.
+      msdasql/tests: Add MSDASQL_ENUMERATOR tests.
+      dmime: Parse Wave track stream.
+      msdasql: Implement IDBProperties GetProperties.
+
+Andrew Eikum (3):
+      evr/presenter: Invalidate media type on destination rectangle change.
+      mf/session: Forward MR_STREAM_VOLUME_SERVICE requests to SAR node.
+      strmbase: Send EC_COMPLETE in IBaseFilter::Run() for unconnected renderers.
+
+Biswapriyo Nath (2):
+      include: Add MFVideoAlphaBitmapFlags in evr9.idl.
+      include: Add BackgroundCopyManager1_5 library in bits1_5.idl.
+
+Brendan Shanks (1):
+      configure: Simplify flag checks for Mac preloader.
+
+Chilung Chan (3):
+      po: Update Traditional Chinese translation.
+      po: Update Traditional Chinese translation.
+      po: Update Traditional Chinese translation.
+
+Connor McAdams (3):
+      uiautomationcore: Implement UiaGetReservedNotSupportedValue.
+      uiautomationcore: Implement UiaGetReservedMixedAttributeValue.
+      uiautomationcore/tests: Add tests for ReservedValue COM interfaces.
+
+Damjan Jovanovic (14):
+      winebus.sys: Get inotify working on FreeBSD.
+      server: Use sysctl instead of /proc/curproc/file on FreeBSD.
+      loader: Use sysctl instead of /proc/curproc/file on FreeBSD.
+      ntdll: Use sysctl instead of /proc/curproc/file on FreeBSD.
+      libs/wine: Use sysctl instead of /proc/curproc/file on FreeBSD.
+      widl: Use sysctl instead of /proc/curproc/file on FreeBSD.
+      winegcc: Use sysctl instead of /proc/curproc/file on FreeBSD.
+      wmc: Use sysctl instead of /proc/curproc/file on FreeBSD.
+      wrc: Use sysctl instead of /proc/curproc/file on FreeBSD.
+      ntdll: Implement setting SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION.IdleTime on FreeBSD.
+      ntdll: Implement setting SYSTEM_PERFORMANCE_INFORMATION.IdleTime on FreeBSD.
+      ntdll: Implement get_device_mount_point() on FreeBSD.
+      ntdll: Implement vm counters on FreeBSD.
+      ntdll: Populate MEMORY_WORKING_SET_EX_INFORMATION on FreeBSD.
+
+Dmitry Timoshkov (2):
+      mpg123: Fix compilation with clang.
+      user32: DragDetect() should enter its message loop only if the left mouse button is pressed.
+
+Eric Pouech (36):
+      dbghelp: Let StackWalkEx() succeed even when inline mode is requested.
+      dbghelp: Implement SymFromInlineContext() when context isn't in inline mode.
+      dbghelp: Implement SymGetLineFromInlineContext*() when context isn't in inline mode.
+      dbghelp: Add local scope information in struct process.
+      dbghelp: Implement SymSetScopeFromAddr() and SymSetScopeFromIndex().
+      dbghelp: Rewrite SymSetContext() on top of SymSetScopeFromAddr().
+      dbghelp: Implement SymSetScopeFromInlineContext() when context isn't inlined.
+      winedbg: Add a pair of helpers for accessing frames' internal info.
+      winedbg: Use SymSetScopeFromAddr() instead of SymSetContext().
+      winedbg: Use inline contexts oriented APIs for stack backtrace.
+      dbghelp: Correct type of exported function addresses in PE module.
+      dbghelp: Introduce symt_inlinesite (SymTagInlineSite) to support inline sites.
+      dbghelp/dwarf: Add current block as a field in dwarf2_subprogram_t.
+      dbghelp/dwarf: Generate proper inline functions.
+      dbghelp/dwarf: Store each subrange for an inlined function.
+      dbghelp: Implement StackWalkEx for inlined frames.
+      dbghelp: Implement SymFromInlineContext for inlined frames.
+      dbghelp: Implement SymSetScopeFromInlineContext for inlined frames.
+      dbghelp: Rename line_info's pc_offset field into address.
+      dbghelp: Make symt_add_func_line() last parameter an absolute address.
+      dbghelp: In SymGetLine* family, compute displacement relative to line_info's address.
+      dbghelp: Implement SymGetLineFromInlineContext(W) for inlined frame.
+      dbghelp/dwarf: Store line numbers and file info for inlined functions.
+      dbghelp: Silence a couple of C++ oriented requests in SymGetTypeInfo().
+      dbghelp: Silence a couple more CV entries.
+      mscvpdb.h: Update symbol header for linetab2's block size.
+      winedump: Add some missing next record computation for type leaf.
+      mscvpdb.h: Add definition for friend function v3.
+      winedump: Dump index leaves (TPI).
+      winedump: Also dump library name for a module.
+      mscvpdb.h: Update some line number oriented definitions.
+      dbghelp/pdb: Convert to new debug subsection definitions (in linetab2).
+      include: Added OMAP related definitions.
+      mscvpdb.h: Move parsing definitions to dbghelp.
+      configure: Allow expressing dwarf version in CFLAGS and CROSSCFLAGS.
+      dbghelp/dwarf: Don't skip functions when their inlined flag comes from an abstract origin.
+
+Francisco Casas (2):
+      gdi32: Avoid integer overflow in the obj map compare fn.
+      gdi32: Do not sign extend 64-bit gdi handles.
+
+François Gouget (2):
+      winetest: Don't truncate oversize reports before sending them.
+      wined3d: Add a trailing linefeed to an ERR().
+
+Gabriel Ivăncescu (6):
+      jscript: Fix some refcount leaks.
+      mshtml: Fix reference leak in HTMLStyleSheetsCollection_item.
+      mshtml: Fix reference leak in HTMLStyleSheetRulesCollection_item.
+      jscript: Implement Object.prototype.isPrototypeOf method.
+      jscript: Implement Object.prototype.__proto__ property.
+      mshtml: Hold a ref to the location on the window side.
+
+Georg Lehmann (1):
+      winevulkan: Update to VK spec version 1.2.197.
+
+Hans Leidekker (8):
+      secur32: Fix expected buffer size in trace message.
+      secur32/tests: Check supported DTLS protocols.
+      secur32: Clear expiry timestamp in schan_InitializeSecurityContextW().
+      secur32: Validate the context handle in schan_InitializeSecurityContextW().
+      secur32: Fix error return for DTLS contexts in schan_InitializeSecurityContextW().
+      secur32/tests: Add DTLS tests.
+      mshtml: Implement HTMLAnchorElement_get_port().
+      mshtml: Implement HTMLAnchorElement_get_pathname().
+
+Huw D. M. Davies (12):
+      wmc: Remove struct and enum typedefs.
+      winspool: Move loading of libcups to cups.c.
+      winspool: Remove support for parsing /etc/printcap.
+      winspool: Call the ppd retrieval function from add_printer_driver().
+      winspool: Move CUPS printer enumeration to cups.c.
+      winspool: Move ppd retrieval to cups.c.
+      winspool: Move the default page size query to cups.c.
+      winspool: Move the unix job schedulers to cups.c.
+      winspool: Build with msvcrt.
+      winspool: Add a helper to open various printer registry keys.
+      winspool: Use wide character string literals.
+      configure: Stop checking for poll.h and sys/poll.h - always use poll.h.
+
+Jactry Zeng (4):
+      include: Add IMapView interface.
+      include: Add IRandomAccessStreamWithContentType interface.
+      include: Add IDeviceInformation interface.
+      include: Add IDeviceWatcher interface.
+
+Jan Sikorski (6):
+      d3d9: Don't grab wined3d lock for wined3d incref/decref functions.
+      d3d9: Don't grab wined3d lock in index/vertexbuffer AddRef/Release().
+      d3d9: Don't grab wined3d lock for wined3d_query_issue().
+      d3d9: Don't grab wined3d lock for surface AddRef/Release().
+      wined3d: Reduce locking of device context operations.
+      d2d1: Explicitly set default blend state.
+
+Loïc Rebmeister (1):
+      loader: Create performance\winsat\datastore on prefix creation.
+
+Martin Storsjö (1):
+      winebuild: Fix relay entry points in Thumb mode with binutils/ELF and LLVM/PE.
+
+Matteo Bruni (2):
+      d3dx10/tests: Only accept D3DX10_IFF_WMP tests failure on Windows.
+      d3d10/effect: Create variable buffer before parsing buffer members.
+
+Michael Stefaniuc (4):
+      vbscript: Avoid negating SUCCEEDED().
+      dmime: Accept a DMUS_IO_SEGMENT_HEADER without rtPlayStart field.
+      dmime: Fixup the Wave track parser.
+      winegstreamer: Drop a debugstr from an out parameter.
+
+Nikolay Sivov (50):
+      mfplay: Better handle video control method calls when there is no media item set.
+      mfplay: Fix pointer argument usage in GetMetadata().
+      mfplay: Update destination rectangle on SetVideoSourceRect().
+      mfplay: Fix output argument handling in CreateMediaItemFromURL().
+      mfplay: Partially implement GetDuration().
+      mfplay: Implement GetPosition().
+      mfplay: Change to stopped state when playback ends.
+      evr: Trace normalized rectangle arguments.
+      evr/presenter: Remove scaling by zoom rectangle.
+      mfplay: Trace normalized rectangle arguments.
+      d3dx9/tests: Add some tests for constant descriptions in texture shaders.
+      d3d10/effect: Return when effect creation fails.
+      d3d10/effect: Fix buffer offsets for members and array elements.
+      d3d10/effect: Use data_size of the variable as buffer size.
+      d3d10/effect: Implement GetConstantBuffer().
+      d3d10/effect: Remove interface vs implementation pointer comparsion in buffer variable's IsValid().
+      d3d10/tests: Extend default values test.
+      d3d10/effect: Implement default values handling.
+      d3d10/effect: Implement GetRawValue().
+      d3d10/effect: Implement SetRawValue().
+      evr/mixer: Improve output type candidates attributes configuration.
+      evr/tests: Skip tests if default presenter can't be created.
+      evr/presenter: Handle type invalidation calls without attached mixer.
+      evr/tests: Add some more presenter tests for shutdown state.
+      evr/presenter: Handle shutdown state in more methods.
+      evr/mixer: Handle substream zorder for dxva blitting.
+      combase: Clarify stream data format used by FT marshaler.
+      dxva2: Remove AYUV from accepted input formats.
+      evr/mixer: Implement stream rectangle scaling.
+      evr/presenter: Fix a crash when releasing partially initialized object.
+      d3d10/effect: Remove a cast in IsValid() for SRV variables.
+      d3d10/effect: Get rid of interface pointer casts in IsValid().
+      d3d10/effect: Reduce duplication when releasing shader objects.
+      d3d11: Correctly handle optional arguments in OMGetBlendState().
+      evr/mixer: Fix number of substreams in CreateVideoProcessor().
+      dxva2: Add GetVideoProcessorCaps() for software device.
+      dxva2: Limit allowed number of substreams in CreateVideoProcessor().
+      d3d10/effect: Handle D3D10_SVT_UINT type when returning numeric values.
+      d3d10/effect: Handle NULL depth stencil state assignments.
+      d3d10/effect: Handle NULL blend state assignments.
+      d3d10/effect: Add a helper to read numeric values.
+      d3d10/effect: Add a helper to read raw variable values.
+      d3d10/effect: Implement numeric pass properties updates.
+      evr/presenter: Add presented frames counter.
+      evr/mixer: Pass valid background color parameter to VideoProcessBlt().
+      evr/mixer: Set per-stream alpha to fully opaque.
+      scrrun: Use static sized buffer for drive root.
+      scrrun: Use wide string literals.
+      evr/mixer: Set destination alpha to fully opaque.
+      dxva2: Handle specified background color in VideoProcessBlt().
+
+Paul Gofman (13):
+      ntdll: Fix alignment mask size in RtlInitializeExtendedContext2().
+      ntdll: Return sufficient info size at once from NtQuerySystemInformation(SystemProcessInformation).
+      ntdll: Factor out get_system_process_info() function.
+      ntdll: Implement SystemExtendedProcessInformation system info class.
+      winhttp: Handle TLS close notify in netconn_is_alive().
+      wined3d: Validate pitch against the new format in wined3d_texture_update_desc().
+      kernel32: Correctly restore protection in set_entry_point().
+      ntdll: Allocate DDAG node for module.
+      ntdll: Pass DDAG node to process_attach().
+      ntdll: Store module dependencies in DDAG structure.
+      ntdll: Factor out is_import_dll_system() function.
+      ntdll: Don't add dependencies for system dlls.
+      ntdll: Don't constraint TEB address to 2GB for native x64 process.
+
+Piotr Caban (6):
+      msvcrt: Fix clearing NOINHERIT flag in _dup2.
+      msvcrt: Rewrite _popen function.
+      vcomp: Add _vcomp_for_static_init_i8 implementation.
+      vcomp: Add _vcomp_for_static_simple_init_i8 implementation.
+      msvcrt: Don't use GetDaylightFlag function in _ftime64.
+      msvcp100: Export ctype<char>::table function.
+
+Robert Wilhelm (1):
+      vbscript: Support VT_BSTR in stack_pop_bool.
+
+Rémi Bernon (33):
+      xaudio2_7: Restore FAudioCreateReverbWithCustomAllocatorEXT use for old XAPO versions.
+      faudio: Build with -DNDEBUG.
+      winex11.drv: Introduce new map_raw_event_coords helper.
+      winex11.drv: Use XIValuatorClassInfo instead of a custom struct.
+      winex11.drv: Rename (x|y)_rel_valuator to (x|y)_valuator.
+      winex11.drv: Accumulate mouse movement to avoid rounding losses.
+      msvcrt: Write memory forward in memset.
+      ntdll: Use the unrolled memset from msvcrt.
+      dinput8/tests: Relax test results for 3 buttons mouse.
+      dinput: Canonicalize code style of IDirectInputWImpl_EnumDevices.
+      dinput: Call *_enum_device directly in IDirectInputWImpl_EnumDevices.
+      dinput: Canonicalize code style of IDirectInput7WImpl_CreateDeviceEx.
+      dinput: Call *_create_device directly in IDirectInput7WImpl_CreateDeviceEx.
+      dinput: Call hid_joystick_enum_device directly in EnumDevicesBySemantics.
+      dinput: Call hid_joystick_enum_device directly in JoyConfig8Impl_GetConfig.
+      dinput: Trace device entry points calls consistently.
+      dinput: Rename IDirectInputDeviceImpl to struct dinput_device.
+      dinput: Rename SysKeyboardImpl to struct keyboard.
+      dinput: Rename SysMouseImpl to struct mouse.
+      winebus.sys: Drop the hid_report channel.
+      winebus.sys: Consistently trace HID reports.
+      dinput: Reduce data format trace verbosity.
+      dinput8/tests: Add more HID joystick SetDataFormat tests.
+      dinput: Move user data format to struct dinput_device.
+      dinput: Implement SetProperty DIPROP_APPDATA using enum_objects.
+      dinput: Always use the data format transform.
+      mfreadwrite/reader: Add recognition of ftypeMSNV mp4 header.
+      dinput: Use user object data format array to keep user offsets.
+      dinput: Rewrite and simplify user data format object matching.
+      dinput: Move device data format to struct dinput_device.
+      server: Clear dr7 before setting other registers.
+      server: Remove dr7 PTRACE_POKEUSER workaround.
+      mshtml: Only treat resource://gre(-resources)/ as special.
+
+Serge Gautherie (1):
+      comctl32: Fix 'pszHeaderTitle' copypasta.
+
+Stefan Dösinger (3):
+      wined3d: Test if an offset is needed to get the correct filling convention.
+      d3d9/tests: Test triangle filling convention.
+      wined3d: Emulate fractional viewports if GL doesn't support them.
+
+Zebediah Figura (54):
+      wmvcore/tests: Add some basic tests for streaming with the synchronous reader.
+      wmvcore/tests: Add tests for synchronous reader media types.
+      winegstreamer: Add a basic implementation of IWMSyncReader::OpenStream().
+      winegstreamer: Create a winegstreamer parser object in wm_reader_open_stream().
+      winegstreamer: Implement IWMProfile::GetStreamCount().
+      ntdll: Merge critsection.c into sync.c.
+      winegstreamer: Implement IWMSyncReader::GetOutputCount().
+      winegstreamer: Implement IWMProfile::GetStream().
+      winegstreamer: Implement IWMStreamConfig::GetStreamNumber().
+      winegstreamer: Implement IWMSyncReader::GetOutputNumberForStream().
+      winegstreamer: Implement IWMSyncReader::GetStreamNumberForOutput().
+      ntdll/tests: Move some tests to a new sync.c file.
+      ntdll/tests: Add some tests for Rtl* resources.
+      winegstreamer: Implement IWMStreamConfig::GetStreamType().
+      winegstreamer: Implement IWMSyncReader::GetOutputProps().
+      winegstreamer: Implement IWMOutputMediaProps::GetMediaType().
+      winegstreamer: Implement IWMSyncReader::GetOutputFormat().
+      winegstreamer: Implement IWMSyncReader::GetOutputFormatCount().
+      winegstreamer: Implement IWMSyncReader::SetOutputProps().
+      winegstreamer: Implement IWMSyncReader::GetNextSample().
+      winegstreamer: Implement INSSBuffer::GetBufferAndLength().
+      winegstreamer: Implement reading from all streams in IWMSyncReader::GetNextSample().
+      winegstreamer: Implement IWMSyncReader::SetRange().
+      winegstreamer: Seek to the beginning of the range in wm_reader_set_output_props().
+      wined3d: Make wined3d_buffer_gl_binding_from_bind_flags() static.
+      wined3d: Move the bo_user field to struct wined3d_buffer.
+      evr/tests: Test receiving EC_COMPLETE when not connected.
+      quartz/tests: Test receiving EC_COMPLETE when not connected.
+      qedit/tests: Test receiving EC_COMPLETE when not connected.
+      quartz/dsoundrender: Send EC_COMPLETE in IBaseFilter::Run() when not connected.
+      winegstreamer: Set rcSource and rcTarget for WMF video formats.
+      winegstreamer: Set bFixedSizeSamples for WMF video formats.
+      winegstreamer: Don't set bTemporalCompression for WMF video formats.
+      winegstreamer: Return S_OK from IWMSyncReader::SetOutputSetting(L"VideoSampleDurations").
+      winegstreamer: Implement IWMHeaderInfo::GetAttributeByName(L"Duration").
+      winegstreamer: Implement IWMHeaderInfo::GetAttributeByName(L"Seekable").
+      winegstreamer: Implement IWMSyncReader::Open().
+      wmvcore/tests: Add tests for asynchronous reader streaming.
+      wmvcore/tests: Add tests for asynchronous reader media types.
+      winegstreamer: Implement IWMReaderAdvanced2::OpenStream().
+      winegstreamer: Implement IWMReader::GetOutputCount().
+      winegstreamer: Implement IWMReader::GetOutputProps().
+      wined3d: Protect access to the Vulkan wined3d_allocator with a mutex.
+      wined3d: Separate a vk_buffer_usage_from_bind_flags() helper.
+      wined3d: Separate a vk_memory_type_from_access_flags() helper.
+      wined3d: Protect wined3d_bo_slab_vk map fields with a mutex.
+      winegstreamer: Implement IWMReader::GetOutputFormat().
+      winegstreamer: Implement IWMReader::GetOutputFormatCount().
+      winegstreamer: Implement IWMReader::SetOutputProps().
+      winegstreamer: Implement IWMReader::Start().
+      winegstreamer: Implement IWMReaderAdvanced::SetUserProvidedClock().
+      wined3d: Avoid accessing the "bo" member of struct wined3d_buffer_vk.
+      wined3d: Protect wined3d_chunk_vk map fields with a mutex.
+      wined3d: Allocate all Vulkan buffer BOs from heap.
+
+Zhiyi Zhang (19):
+      uxtheme/tests: Add GetThemeIntList() tests.
+      uxtheme: Use vssym32.h instead of tmschema.h.
+      uxtheme: Support TMT_TRANSITIONDURATIONS property.
+      light.msstyles: Add TMT_TRANSITIONDURATIONS property.
+      uxtheme/tests: Add GetThemeTransitionDuration() tests.
+      uxtheme: Implement GetThemeTransitionDuration().
+      comctl32/button: Remove useless calculation for drawing group boxes.
+      comctl32/button: Use BS_PUSHLIKE instead of WS_EX_RIGHT in BUTTON_PositionRect().
+      comctl32/tests: Test WM_CTLCOLORSTATIC for static controls in a themed dialog.
+      uxtheme: Do not draw parent background when handling WM_CTLCOLORSTATIC for static controls.
+      uxtheme: Fix loading a different theme when theming is on.
+      comctl32/button: Simplify focus rectangle calculation for drawing themed push buttons.
+      comctl32/button: Simplify focus rectangle calculation for drawing themed split buttons.
+      comctl32/button: Add a get_box_rect() helper to calculation box rectangle.
+      comctl32/button: Correctly place parts for buttons with WS_EX_RIGHT.
+      comctl32/button: Correctly place parts for themed push buttons.
+      comctl32/button: Correctly place parts for themed check boxes.
+      comctl32/button: Correctly place parts for themed group boxes.
+      comctl32/button: Correctly place parts for themed split buttons.
+
+Ziqing Hui (4):
+      d3dx10/tests: Add tests for D3DX10CreateTextureFromFile{A, W}.
+      d3dx10/tests: Add tests for D3DX10CreateTextureFromResource{A, W}.
+      user32/tests: Add ALT+letter hotkey tests.
+      server: Also queue hotkey message for WM_SYSKEYDOWN.
+
+--
+Alexandre Julliard
+julliard@winehq.org
